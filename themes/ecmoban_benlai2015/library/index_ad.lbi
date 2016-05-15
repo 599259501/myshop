@@ -1,0 +1,75 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ 
+<style type="text/css"> 
+.container, .container *{margin:0; padding:0;}
+
+.container{width:100%; height:419px; overflow:hidden;position:relative;}
+
+.slider{position:absolute; width:100%; height:419px;}
+.slider li , .slider li a{ list-style:none; float:left;width:100%; height:419px;}
+.slider img{ width:100%; height:419px; display:block;}
+
+.slider2{width:2000px;}
+.slider2 li{float:left;}
+
+.num{ position:absolute; right:5px; bottom:5px; width:800px; margin:0 auto;}
+.num li{
+	float: left;
+	color: #fa0;
+	text-align: center;
+	line-height: 16px;
+	width: 16px;
+	height: 16px;
+	font-family: Arial;
+	font-size: 12px;
+	cursor: pointer;
+	overflow: hidden;
+	margin: 3px 1px;
+	border: 1px solid #8ab700;
+	background-color: #fff;
+}
+.num li.on{
+	color: #fff;
+	line-height: 21px;
+	width: 21px;
+	height: 21px;
+	font-size: 16px;
+	margin: 0 1px;
+	border: 0;
+	background-color: #8ab700;
+	font-weight: bold;
+}
+</style>
+<div class="container" id="idTransformView">
+  <ul class="slider" id="idSlider">
+  <!--{foreach from=$flash name=myflash item=flash}-->
+      <li style="background:url({$flash.img_src}) center 0 no-repeat; position:relative;<!--{if $smarty.foreach.myflash.index==0}-->display:black;<!--{/if}-->"><a href="{$flash.link_src}" target="_blank"></a></li>
+      <!--{/foreach}-->
+
+  </ul>
+  <ul class="num" id="idNum">
+     <!--{foreach from=$flash name=no item=flash}-->
+     <li <!--{if $smarty.foreach.myflash.index==0}-->class="on"<!--{/if}-->>
+     {*这里的意思就是输出循环的当前当前index*}
+    {$smarty.foreach.no.iteration}
+    </li> 
+    <!--{/foreach}-->
+    
+  </ul>
+</div>
+
+{insert_scripts files='jquery.min.js'}
+<script type="text/javascript">
+ var index=0;
+ var count=<!--{$flash_count}-->;
+ setInterval(changeStyle,2000);
+ function changeStyle(){
+  index++;
+  $("#idSlider li").css('display','none');
+  $("#idNum li").removeClass('on');
+  $("#idSlider li:eq("+index%count+")").css('display','block');
+  $("#idNum li:eq("+index%count+")").attr('class','on');
+ }
+</script>
+ <div class="blank5"></div>
+<div class="blank"></div>
